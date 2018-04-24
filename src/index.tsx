@@ -1,26 +1,52 @@
 import * as React from 'react';
-import { AppRegistry, Image, ScrollView, Text } from 'react-native';
-
+import { AppRegistry, TouchableOpacity,Image, ScrollView, Text, Platform, View, Button,StyleSheet} from 'react-native';
 export default class EntryPoint extends React.Component {
+  constructor(props: any) {
+    super(props);
+    this.state = { count: 0 }
+    this.onPress = this.onPress.bind(this);
+  }
+  private onPress = () => {
+    this.setState({
+      count: this.state.count+1
+    })
+  }
+
   public render() {
     return (
-      <ScrollView>
-        <Image
-          source={{uri: 'https://i.chzbgr.com/full/7345954048/h7E2C65F9/'}}
-          style={{width: 320, height: 180}}
-        />
-        <Text>
-          On, iOS, a React Native ScrollView uses a native UIScrollView.
-          On Android, it uses a native ScrollView.
-
-          On iOS, a React Native Image uses a native UIImageView.
-          On Android, it uses a native ImageView.
-
-          React Native wraps the fundamental native components, giving you
-          the performance of a native app, plus the clean design of React.
-        </Text>
-      </ScrollView>
+      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this.onPress}
+      >
+        <Text> Touch Here </Text>
+      </TouchableOpacity>
+      <View style={[styles.countContainer]}>
+        <Text style={[styles.countText]}>
+           { this.state.count !== 0 ? this.state.count: null}
+         </Text>
+       </View>
+     </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10
+  },
+  countContainer: {
+    alignItems: 'center',
+    padding: 10
+  },
+  countText: {
+    color: '#FF00FF'
+  }
+})
 AppRegistry.registerComponent(require('./../app.json').name, () => EntryPoint);
